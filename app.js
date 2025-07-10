@@ -29,17 +29,55 @@ app.get("/listings",async (req,res)=>{
     res.render("index.ejs",{allListings})
 });
 
-//Show Route
+//New & Create Route
+app.get("/listings/new",(req,res)=>{
+    res.render("Newform.ejs")
+})
+
+app.post("/listings",async (req,res)=>{
+    let {title,description,image,price,location,country} = req.body;
+    const place = new Listing({
+        title : title,
+        description : description,
+        image:image,
+        price:price,
+        location:location,
+        country:country,
+    })
+    place.save()
+        .then(res => console.log("Updated"))
+        .catch(err => console.log(err))
+    res.redirect("/listings")
+})
+
+
+//Show Route, we used it after new and create because new takes it's value as id
 app.get("/listings/:id", async (req,res)=>{
     let {id} = req.params;
     const listing =await Listing.findById(id)
     res.render("show.ejs",{listing})
 })
 
-//New & Create Route
-app.get("/listings/new",(req,res)=>{
-    res.render("Newform.ejs")
+//updtae: Edit
+app.get("/listings/:id/edit", async (req,res)=>{
+    let {id} = req.params;
+    const listing =await Listing.findById(id)
+    res.render("edit.ejs",{listing})
 })
+app.put("/listings/:id", async (req, res) => {
+    const { id } = req.params;
+    const listingData = req.body.listing;
+    Listing.findByIdAndUpdate(id, listingData, { runValidators: true, new: true })
+        .then((res) => {console.log("Received ID:", req.params.id);})
+        .catch((err)=> {console.log(err)})
+    res.redirect(`/listings/${id}`);
+});
+//Delete
+app.delete("/listings/:id", async (req, res) => {
+    const { id } = req.params;
+    await Listing.findByIdAndDelete(id)
+    res.redirect("/listings");
+});
 
 //listening
 app.listen(port,()=>{
