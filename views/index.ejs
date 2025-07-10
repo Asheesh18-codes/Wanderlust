@@ -1,19 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wanderer</title>
-</head>
+<%layout ("/layouts/boilerplate.ejs")%>
 <body>
-    <h1>All listings</h1>
-    <ul>
-        <form method="get" action="/listings/new">
-            <button>Add your Place</button>
-        </form>
-        <%for(let list of allListings){%>
-            <li><a href = "/listings/<%= list.id%>"><%= list.title%></a></li>
-        <%}%>
-    </ul>
+       <div class="row row-cols-lg-3 row-cols-md-3 ro-cols-sm-1">
+            <%for(let list of allListings){%>
+                <a class = "linked" href = "/listings/<%= list.id %>">
+                    <div class="card">
+                        <img src="<%=list.image.url%>" class="card-img-top" alt="<%=list.title%>" style = "height: 20rem;">
+                        <div class="card-body">
+                            <p class="card-text"><%= list.title %><br/>
+                                &#8377;<%= list.price.toLocaleString("en-IN") %>/night</p>
+                        </div>
+                        <div class="card-img-overlay">
+                            <div class="overlay-content">
+                                <h5 class="card-title overlayTitle">About</h5>
+                                <p class="card-text overlayText"><%= list.description %></p>
+                            </div>  
+                        </div>
+                    </div>
+                </a>
+            <%}%>
+       </div>
 </body>
-</html>
