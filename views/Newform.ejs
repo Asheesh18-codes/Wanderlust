@@ -11,42 +11,47 @@
     <div class="row w-100">
       <div class="col-md-8 offset-md-2">
         <h3 class="mb-4 text-center">Add Your Place</h3>
-        <form method="POST" action="/listings">
+        <form method="POST" action="/listings" novalidate class="needs-validation">
           
           <!-- Title -->
           <div class="mb-3">
             <label for="title" class="form-label">Title</label>
-            <input id="title" name="title" placeholder="Enter title" type="text" required class="form-control" />
+            <input id="title" name="listing[title]" placeholder="Enter title" type="text" required class="form-control" />
+            <div class="valid-feedback">Title looks good</div>
           </div>
 
           <!-- Description -->
           <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea id="description" name="description" placeholder="Enter description" required 
+            <textarea id="description" name="listing[description]" placeholder="Enter description" required 
               class="form-control" rows="5"></textarea>
+            <div class="invalid-feedback">Add some description</div>
           </div>
 
           <!-- Image URL -->
           <div class="mb-3">
             <label for="image" class="form-label">Image URL</label>
-            <input id="image" name="image" placeholder="Enter image URL/link" type="text" required class="form-control" />
+            <input id="image" name="listing[image]" placeholder="Enter image URL/link" type="text" class="form-control" />
           </div>
 
           <!-- Location -->
           <div class="mb-3">
             <label for="location" class="form-label">Location</label>
-            <input id="location" name="location" placeholder="Enter location" type="text" required class="form-control" />
+            <input id="location" name="listing[location]" placeholder="Enter location" type="text" required class="form-control" />
+            <div class="invalid-feedback">Add a Valid Locarion</div>
           </div>
 
           <!-- Price and Country -->
           <div class="row">
             <div class="col-md-4 mb-3">
               <label for="price" class="form-label">Price</label>
-              <input id="price" name="price" placeholder="Enter price" type="number" min="0" required class="form-control" />
+              <input id="price" name="listing[price]" placeholder="Enter price" type="number" min="0" required class="form-control" />
+              <div class="invalid-feedback">invalid price format</div>
             </div>
             <div class="col-md-8 mb-3">
               <label for="country" class="form-label">Country</label>
-              <input id="country" name="country" placeholder="Enter country" type="text" required class="form-control" />
+              <input id="country" name="listing[country]" placeholder="Enter country" type="text" required class="form-control" />
+              <div class="invalid-feedback">Country Name Invalid</div>
             </div>
           </div>
 
@@ -56,4 +61,5 @@
       </div>
     </div>
   </div>
+  <script src="/script.js"></script>
 </body>

@@ -6,6 +6,10 @@ const Listing = require("../Full Stack Wanderlust Project/models/listing.js")
 const path = require('path');
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
+const wrapAsync = require("./utils/wrapAsync.js");
+const ExpressError = require("./utils/ExpressError.js");
+
+const listingSchema = require("./schema.js");
 
 app.use(express.urlencoded({extended:true})); // for data parsing
 app.set("view engine","ejs");
@@ -14,6 +18,18 @@ app.use(express.static(path.join(__dirname,"public")));
 app.use(methodOverride("_method"))
 app.engine("ejs", ejsMate)
 app.set("views",path.join(__dirname,"views"));
+
+const validateListing = (req,res,next)=>{
+    let  {error}= listingSchema.validate(req.body)
+    if(error){
+        let errMsg = error.details.map((el)=>{
+            el.message
+        }).join(",");
+        throw new ExpressError(400,errMsg);
+    }else{
+        return next();
+    }
+};
 
 main()
     .then((res)=>{console.log("connected to DB")})
@@ -27,61 +43,82 @@ async function main() {
 app.get("/",(req,res)=>{
     res.redirect("/listings")
 })
-app.get("/listings",async (req,res)=>{
+app.get("/listings",wrapAsync(async (req,res)=>{
     const allListings = await Listing.find({})
     res.render("index.ejs",{allListings})
-});
+}));
 
 //New & Create Route
 app.get("/listings/new",(req,res)=>{
     res.render("Newform.ejs")
 })
 
-app.post("/listings",async (req,res)=>{
-    let {title,description,image,price,location,country} = req.body;
-    const place = new Listing({
-        title : title,
-        description : description,
-        image:image,
-        price:price,
-        location:location,
-        country:country,
-    })
-    place.save()
-        .then(res => console.log("Updated"))
-        .catch(err => console.log(err))
+app.post("/listings",validateListing,wrapAsync(async (req,res,next)=>{
+    const place = new Listing(req.body.listing)
+    await place.save()
     res.redirect("/listings")
-})
+}))
+
 
 
 //Show Route, we used it after new and create because new takes it's value as id
-app.get("/listings/:id", async (req,res)=>{
+app.get("/listings/:id", wrapAsync(async (req,res)=>{
     let {id} = req.params;
     const listing =await Listing.findById(id)
     res.render("show.ejs",{listing})
-})
+}))
 
-//updtae: Edit
-app.get("/listings/:id/edit", async (req,res)=>{
+//update: Edit
+app.get("/listings/:id/edit", wrapAsync(async (req,res)=>{
     let {id} = req.params;
     const listing =await Listing.findById(id)
     res.render("edit.ejs",{listing})
-})
-app.put("/listings/:id", async (req, res) => {
+}))
+app.put("/listings/:id", validateListing,wrapAsync(async (req, res) => {
     const { id } = req.params;
-    const listingData = req.body.listing;
-    Listing.findByIdAndUpdate(id, listingData, { runValidators: true, new: true })
-        .then((res) => {console.log("Received ID:", req.params.id);})
-        .catch((err)=> {console.log(err)})
+    const updatedListing = await Listing.findByIdAndUpdate(id, listingData, {
+        runValidators: true,
+        new: true
+    });
     res.redirect(`/listings/${id}`);
-});
+}));
+
 //Delete
-app.delete("/listings/:id", async (req, res) => {
+app.delete("/listings/:id", wrapAsync(async (req, res) => {
     const { id } = req.params;
     await Listing.findByIdAndDelete(id)
     res.redirect("/listings");
-});
+}));
+// Catch-all for undefined routes (MUST go after all other routes)
+// Catch-all 404 handler (last middleware)
+// app.all("*",(req, res, next) => {
+//     next(new ExpressError(404, "Page Not Found"));
+// });
 
+
+//validation and server side error handling
+app.use((err, req, res, next) => {
+    // Default error values
+    const { statusCode = 500, message = "Something went wrong!" } = err;
+
+    // Specific error type handling
+    if (err.name === "ValidationError" || err.name === "CastError") {
+        return res.status(400).render("error.ejs", {
+            errorOccured: { 
+                statusCode: 400, 
+                message: err.message || "Validation Error"
+            }
+        });
+    }
+
+    // Generic error rendering
+    res.status(statusCode).render("error.ejs", {
+        errorOccured: { 
+            statusCode, 
+            message 
+        }
+    });
+});
 //listening
 app.listen(port,()=>{
     console.log("Listening")

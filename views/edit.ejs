@@ -11,7 +11,7 @@
     <div class="row w-100">
       <div class="col-md-8 offset-md-2">
         <h3 class="mb-4 text-center">Edit Your Place</h3>
-        <form method="POST" action="/listings/<%= listing.id %>?_method=PUT">
+        <form method="POST" action="/listings/<%= listing.id %>?_method=PUT" novalidate class="needs-validation">
 
           <!-- Title -->
           <div class="mb-3">
@@ -55,4 +55,5 @@
       </div>
     </div>
   </div>
+  <script src="/script.js"></script>
 </body>
