@@ -19,6 +19,7 @@
         <div class="col-md-7">
           <div class="card-body p-4">
             <h3 class="card-title"><%= listing.title %></h3>
+            <p class="text-muted">Posted by: <i class="fa-solid fa-user"></i> <%= listing.owner.username %></p>
             <h5 class="text-success mb-3">₹<%= new Intl.NumberFormat("en-IN").format(listing.price) %></h5>
             <p class="card-text"><%= listing.description %></p>
           </div>
@@ -32,12 +33,14 @@
           <li class="list-group-item"><strong>Country:</strong> <%= listing.country %></li>
         </ul>
 
-        <div class="d-flex justify-content-between">
-          <a href="/listings/<%= listing.id %>/edit" class="btn btn-outline-primary">Edit Listing</a>
-          <form method="POST" action="/listings/<%= listing.id %>?_method=DELETE" onsubmit="return confirm('Are you sure you want to delete this listing?');">
-            <button class="btn btn-outline-danger">Delete</button>
-          </form>
-        </div>
+        <% if(currentUser && currentUser._id.equals(listing.owner._id)) {%>
+          <div class="d-flex justify-content-between">
+            <a href="/listings/<%= listing.id %>/edit" class="btn btn-outline-primary">Edit Listing</a>
+            <form method="POST" action="/listings/<%= listing.id %>?_method=DELETE" onsubmit="return confirm('Are you sure you want to delete this listing?');">
+              <button class="btn btn-outline-danger">Delete</button>
+            </form>
+          </div>
+        <% } %>
       </div>
       <div class="card-footer bg-white p-4">
         <h4>Leave a Review</h4>
@@ -67,15 +70,17 @@
               <div class="col">
                 <div class="card h-100 shadow-sm border-0">
                   <div class="card-body">
-                    <h5 class="card-title"><i class="fa-solid fa-user"></i> User</h5>
-                    <p class="card-text"><%= review.comment %></p>
+                    <h5 class="card-title"><i class="fa-solid fa-user"></i> <%= review.author.username %></h5>
+                    <p class45="card-text"><%= review.comment %></p>
                     <p class="card-text text-warning"><strong>Rating:</strong> <%= review.rating %> ⭐</p>
                   </div>
-                  <div class="card-footer bg-transparent border-top-0 d-flex justify-content-end">
-                    <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
-                      <button class="btn btn-outline-danger btn-sm">Delete Review</button>
-                    </form>
-                  </div>
+                  <% if (currentUser && currentUser._id.equals(review.author._id)) { %>
+                    <div class="card-footer bg-transparent border-top-0 d-flex justify-content-end">
+                      <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                        <button class="btn btn-outline-danger btn-sm">Delete Review</button>
+                      </form>
+                    </div>
+                  <% } %>
                 </div>
               </div>
             <% } %>

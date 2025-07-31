@@ -1,0 +1,61 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+<div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-header text-white text-center rounded-top-4" style="background-color: #c0392b;">
+                <h3 class="mb-0 fw-semibold">Login to Your Account</h3>
+            </div>
+            <div class="card-body px-4 py-5">
+                <form action="/login" method="POST" novalidate class="needs-validation">
+                    <!-- Username -->
+                    <div class="mb-4">
+                        <label for="username" class="form-label">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light">
+                                <i class="bi bi-person"></i>
+                            </span>
+                            <input 
+                                type="text" 
+                                class="form-control rounded-end" 
+                                id="username" 
+                                name="username" 
+                                placeholder="Enter username"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-4">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light">
+                                <i class="bi bi-lock"></i>
+                            </span>
+                            <input 
+                                type="password" 
+                                class="form-control rounded-end" 
+                                id="password" 
+                                name="password" 
+                                placeholder="Enter password"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill fw-semibold">
+                        Login
+                    </button>
+                </form>
+            </div>
+            <div class="card-footer text-center bg-light rounded-bottom-4 py-3">
+                <small class="text-muted">
+                    Don't have an account?
+                    <a href="/signup" class="text-primary fw-medium">Sign Up</a>
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
