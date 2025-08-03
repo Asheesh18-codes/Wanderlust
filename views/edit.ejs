@@ -4,14 +4,42 @@
   html, body {
     height: 100%;
   }
+
+  .form-container {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+  }
+
+  .form-label {
+    font-weight: 500;
+  }
+
+  .form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.25);
+  }
+
+  .btn-dark {
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  .img-preview {
+    max-height: 300px;
+    object-fit: cover;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+  }
 </style>
 
 <body class="bg-light h-100">
   <div class="container h-100 d-flex align-items-center justify-content-center">
     <div class="row w-100">
-      <div class="col-md-8 offset-md-2">
-        <h3 class="mb-4 text-center">Edit Your Place</h3>
-        <form method="POST" action="/listings/<%= listing.id %>?_method=PUT" novalidate class="needs-validation">
+      <div class="col-lg-8 offset-lg-2 form-container">
+        <h2 class="mb-4 text-center">Edit Your Place</h2>
+
+        <form method="POST" action="/listings/<%= listing.id %>?_method=PUT" class="needs-validation" enctype="multipart/form-data" novalidate>
 
           <!-- Title -->
           <div class="mb-3">
@@ -25,10 +53,15 @@
             <textarea id="description" name="listing[description]" class="form-control" rows="5" required><%= listing.description %></textarea>
           </div>
 
-          <!-- Image Preview (not editable here, for display only) -->
+          <!-- Image Preview -->
           <div class="mb-3">
-            <label class="form-label">Current Image</label>
-            <img src="<%= listing.image.url %>" alt="Listing Image" class="img-fluid rounded border" style="max-height: 300px;" />
+            <label class="form-label">Current Image</label><br />
+            <img src="<%= listing.image.url %>" alt="Listing Image" class="img-preview img-fluid" />
+          </div>
+
+          <div class="mb-3">
+            <label for="image" class="form-label">Upload New Image</label>
+            <input id="image" name="listing[image]" type="file" class="form-control" />
           </div>
 
           <!-- Location -->
@@ -37,7 +70,7 @@
             <input id="location" name="listing[location]" value="<%= listing.location %>" class="form-control" required />
           </div>
 
-          <!-- Country and Price -->
+          <!-- Country & Price -->
           <div class="row">
             <div class="col-md-8 mb-3">
               <label for="country" class="form-label">Country</label>
@@ -49,8 +82,10 @@
             </div>
           </div>
 
-          <!-- Submit -->
-          <button type="submit" class="btn btn-dark w-100">Update</button>
+          <!-- Submit Button -->
+          <div class="d-grid">
+            <button type="submit" class="btn btn-dark">Update Listing</button>
+          </div>
         </form>
       </div>
     </div>

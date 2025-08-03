@@ -46,8 +46,19 @@
         <h4>Leave a Review</h4>
         <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
           <div class="mb-3 mt-3">
-            <label for="range" class="form-label">Range</label>
-            <input id = "range" name = "review[rating]" min = '1' max = '5' type="range" class="form-range">
+            <label for="range" class="form-label">Rating</label>
+            <fieldset class="starability-slot">
+              <input type="radio" id="first-rate1" name="review[rating]" value="1" required />
+              <label for="first-rate1" title="Terrible">1 star</label>
+              <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+              <label for="first-rate2" title="Not good">2 stars</label>
+              <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+              <label for="first-rate3" title="Average">3 stars</label>
+              <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+              <label for="first-rate4" title="Very good">4 stars</label>
+              <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+              <label for="first-rate5" title="Amazing">5 stars</label>
+            </fieldset>
           </div>
           <div class="mb-3 mt-3">
             <label for="comment" class="form-label">Comments</label>
@@ -71,8 +82,8 @@
                 <div class="card h-100 shadow-sm border-0">
                   <div class="card-body">
                     <h5 class="card-title"><i class="fa-solid fa-user"></i> <%= review.author.username %></h5>
-                    <p class45="card-text"><%= review.comment %></p>
-                    <p class="card-text text-warning"><strong>Rating:</strong> <%= review.rating %> ⭐</p>
+                    <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
+                    <p class="card-text"><%= review.comment %></p>
                   </div>
                   <% if (currentUser && currentUser._id.equals(review.author._id)) { %>
                     <div class="card-footer bg-transparent border-top-0 d-flex justify-content-end">

@@ -11,7 +11,7 @@
     <div class="row w-100">
       <div class="col-md-8 offset-md-2">
         <h3 class="mb-4 text-center">Add Your Place</h3>
-        <form method="POST" action="/listings" novalidate class="needs-validation">
+        <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
           
           <!-- Title -->
           <div class="mb-3">
@@ -30,8 +30,9 @@
 
           <!-- Image URL -->
           <div class="mb-3">
-            <label for="image" class="form-label">Image URL</label>
-            <input id="image" name="listing[image]" placeholder="Enter image URL/link" type="text" class="form-control" />
+            <label for="image" class="form-label">Upload Image</label>
+            <input id="image" name="listing[image]" type="file" class="form-control" required/>
+            <div class="invalid-feedback">Please upload an image</div>
           </div>
 
           <!-- Location -->

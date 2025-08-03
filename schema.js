@@ -1,4 +1,4 @@
-const Joi = require('joi');
+const Joi = require('joi'); // Import Joi for schema validation
 
 const listingSchema = Joi.object({
   listing: Joi.object({
