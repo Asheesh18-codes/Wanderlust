@@ -1,5 +1,8 @@
 const Listing = require("../models/listing.js");
 const ExpressError = require("../utils/ExpressError.js");
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapToken = process.env.MAP_TOKEN || 'your_mapbox_token_here';
+const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
 module.exports.index = async (req, res) => {
     const allListings = await Listing.find({});
@@ -11,11 +14,19 @@ module.exports.renderNewForm =  (req, res) => {
 }
 
 module.exports.createListing = async (req, res) => {
+    let response = await geocodingClient.forwardGeocode({
+        query: req.body.listing.location,
+        limit: 1
+    }).send()
     let url = req.file.path
     let filename = req.file.filename
     const place = new Listing(req.body.listing);
     place.owner = req.user._id; // Set the owner to the currently logged-in user
     place.image = {filename,url}; // Set the image URL and filename
+    place.geometry = {
+        type: 'Point',
+        coordinates: response.body.features[0].geometry.coordinates
+    };
     await place.save();
     req.flash('success',"Hello you've successfully Added a new listing" );
     res.redirect("/listings");
@@ -33,7 +44,11 @@ module.exports.showListing = async (req, res) => {
         req.flash("error","listing you've requested does not exists" );
         return res.redirect("/listings");
     }
-    res.render("show.ejs", { listing });
+    res.render("show.ejs", { 
+        listing,
+        mapToken, // Pass the map token to the view
+        coordinates: listing.geometry.coordinates // Pass the coordinates for the map
+        }); 
 }
 
 module.exports.renderEditForm = async (req, res) => {
