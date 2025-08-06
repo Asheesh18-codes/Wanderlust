@@ -9,6 +9,9 @@ Wanderlust is a full-stack web application for listing, reviewing, and managing 
 - Leave reviews on listings
 - Flash messages for user feedback
 - Responsive UI with Bootstrap and custom CSS
+- RESTful routing for listings and reviews
+- Modular code structure for scalability
+- Database seeding for demo/testing
 
 ## Folder Structure
 
@@ -31,7 +34,7 @@ Wanderlust is a full-stack web application for listing, reviewing, and managing 
 ### Prerequisites
 
 - Node.js & npm
-- MongoDB running locally
+- MongoDB running locally or Atlas
 
 ### Installation
 
@@ -60,7 +63,15 @@ Wanderlust is a full-stack web application for listing, reviewing, and managing 
 
 ## Environment Variables
 
-- `SESSION_SECRET` (optional): Set a custom session secret for production.
+Create a `.env` file in the root directory and add:
+
+```
+SESSION_SECRET=your_secret_key
+MONGODB_URI=your_mongodb_connection_string
+```
+
+- `SESSION_SECRET`: Set a custom session secret for production.
+- `MONGODB_URI`: (Optional) Use a custom MongoDB URI (defaults to localhost if not set).
 
 ## Technologies Used
 
@@ -69,6 +80,10 @@ Wanderlust is a full-stack web application for listing, reviewing, and managing 
 - Passport.js (authentication)
 - EJS & EJS-Mate (templating)
 - Bootstrap 5, Font Awesome
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
 
