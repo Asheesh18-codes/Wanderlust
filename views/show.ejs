@@ -1,69 +1,8 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-<style>
-  html, body {
-    height: 100vh;
-  }
-  .listing-card {
-    margin-top: 40px;
-    margin-bottom: 40px;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 4px 32px rgba(0,0,0,0.08);
-  }
-  .card-footer.bg-white {
-    border-top: 1px solid #eee;
-  }
-  .review-card {
-    border-radius: 16px;
-    background: #f8f9fa;
-    transition: box-shadow 0.2s;
-  }
-  .review-card:hover {
-    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
-  }
-  .no-reviews {
-    background: #f8f9fa;
-    border-radius: 12px;
-    padding: 24px;
-    text-align: center;
-  }
-  #map {
-    border-radius: 16px;
-    border: 1px solid #eee;
-  }
-
-  /* ⭐ Animated Star Rating Styling */
-  .star-rating {
-    direction: rtl;
-    display: inline-flex;
-    justify-content: flex-start;
-  }
-
-  .star-rating input[type="radio"] {
-    display: none;
-  }
-
-  .star-rating label {
-    font-size: 2rem;
-    color: #ddd;
-    cursor: pointer;
-    transition: color 0.3s;
-  }
-
-  .star-rating input:checked ~ label {
-    color: #ffc107;
-  }
-
-  .star-rating label:hover,
-  .star-rating label:hover ~ label {
-    color: #ffc107;
-  }
-</style>
-
 <script>
-  let mapToken = '<%= process.env.MAP_TOKEN %>';
-  const listing = <%- JSON.stringify(listing) %>;
+  let mapToken = '<%= process.env.MAP_TOKEN %>'; // Ensure this is set in your environment variables
+  const listing = <%- JSON.stringify(listing) %>;// Ensure listing is available in the script
 </script>
 
 <body class="bg-light h-100">

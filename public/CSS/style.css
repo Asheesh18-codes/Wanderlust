@@ -89,3 +89,118 @@ body{
 .card:hover .card-img-overlay {
   opacity: 1;
 }
+
+/*show.ejs specific styles */
+.map-container {
+    width: 100%;
+    height: 400px;
+    margin-top: 20px;
+}
+  html, body {
+    height: 100vh;
+  }
+  .listing-card {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+  }
+  .card-footer.bg-white {
+    border-top: 1px solid #eee;
+  }
+  .review-card {
+    border-radius: 16px;
+    background: #f8f9fa;
+    transition: box-shadow 0.2s;
+  }
+  .review-card:hover {
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  }
+  .no-reviews {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+  }
+  #map {
+    border-radius: 16px;
+    border: 1px solid #eee;
+  }
+
+  /* ⭐ Animated Star Rating Styling */
+  .star-rating {
+    direction: rtl;
+    display: inline-flex;
+    justify-content: flex-start;
+  }
+
+  .star-rating input[type="radio"] {
+    display: none;
+  }
+
+  .star-rating label {
+    font-size: 2rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  .star-rating input:checked ~ label {
+    color: #ffc107;
+  }
+
+  .star-rating label:hover,
+  .star-rating label:hover ~ label {
+    color: #ffc107;
+  }
+
+/* Filters */
+#filters {
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        margin: 0;
+        gap: 1rem;
+        scroll-behavior: smooth;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    #filters::-webkit-scrollbar {
+        display: none;
+    }
+    .filter {
+        align-items: center;
+        margin-top: 1rem;
+        padding: 1rem;
+        opacity: 0.8;
+        transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .filter i {
+        color: #ff6347;
+        font-size: 1.2rem;
+        align-items: center;
+        margin-right: 0.5rem;
+    }
+    .filter:hover {
+        color: #ff4500;
+        opacity: 1;
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+/* Update switch positioning to be relative and add margin */
+    .switch-top-right {
+        margin: 1.2rem 2rem 0 0;
+        display: flex;
+        justify-content: flex-end;
+    }
+    @media (max-width: 768px) {
+        .switch-top-right {
+            margin: 1.2rem 1rem 0 0;
+        }
+    }
+    body {
+        position: relative;
+    }

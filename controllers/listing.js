@@ -62,21 +62,31 @@ module.exports.renderEditForm = async (req, res) => {
 }
 
 module.exports.updateListing = async (req, res) => {
+    let response = await geocodingClient.forwardGeocode({
+        query: req.body.listing.location,
+        limit: 1
+    }).send();
     const { id } = req.params;
     const updatedListing = await Listing.findByIdAndUpdate(id, req.body.listing, {
         runValidators: true,
         new: true
     });
-    let url = req.file.path
-    let filename = req.file.filename
-    if(typeof req.file !== 'undefined') {
-        updatedListing.image = {filename,url}; // Update the image URL and filename
+    if (typeof req.file !== 'undefined') {
+        let url = req.file.path;
+        let filename = req.file.filename;
+        updatedListing.image = { filename, url }; // Update the image URL and filename
     }
     await updatedListing.save();
+    updatedListing.geometry = {
+        type: 'Point',
+        coordinates: response.body.features[0].geometry.coordinates
+    };
+    await updatedListing.save();
+    // Check if the listing was found and updated
     if (!updatedListing) {
         throw new ExpressError(404, "Listing Not Found");
     }
-    req.flash('success',"Hello you've successfully Updated your listing" );
+    req.flash('success', "Hello you've successfully Updated your listing");
     res.redirect(`/listings/${id}`);
 }
 
