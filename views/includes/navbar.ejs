@@ -1,53 +1,62 @@
-<style>
-  .search-btn {
-    background-color: #ff6347; /* Light background for the button */
-    border: 1px solid #ced4da; /* Border to match the input field */
-    border-radius: 25px;
-    color: #495057; /* Dark text color */
-    }
-  .search-btn:hover{
-    background-color: #e03e2d; /* Darker background on hover */
-    border-color: #ced4da; /* Border color remains the same */
-    color: #ffffff; /* White text color on hover */
-  }
-  .search-btn i {
-        display: inline;
-  }
-  .search-input{
-    border-radius: 25px;
-    border-color: #495057;
-  }
-</style>
 <nav class="navbar navbar-expand-lg bg-body-light border-bottom sticky-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/"><i class="fa-solid fa-compass"></i> Wanderlust</a>
+      <!-- Brand -->
+      <a class="navbar-brand" href="/">
+        <i class="fa-solid fa-compass"></i>
+        <span style="font-weight: 600; font-size: 22px;">wanderlust</span>
+      </a>
+      
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
         <span class="navbar-toggler-icon"></span>
       </button>
+      
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <!-- Navigation Links -->
         <div class="navbar-nav me-auto">
-          <a class="nav-link" href="/listings">All Listings</a>
-          <a class="nav-link" href="/listings/new">AirBnb Your Home</a>
+          <a class="nav-link" href="/listings">Explore</a>
+          <a class="nav-link" href="/listings/new">Host your space</a>
         </div>
+        
         <!-- Centered Search Bar -->
         <div class="navbar-nav mx-auto">
-          <form class="d-flex" role="search">
-            <input class="form-control me-2 search-input" type="search" placeholder="Search destinations" aria-label="Search"/>
-            <button class="search-btn btn btn-outline" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
-          </form>
+          <div class="search-container">
+            <input class="search-input" type="search" placeholder="Where are you going?" aria-label="Search"/>
+            <button class="search-btn" type="submit">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
         </div>
-        <!-- User Dropdown -->
+        
+        <!-- User Menu -->
         <div class="dropdown">
-          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
-            <i class="fa-solid fa-user fa-lg"></i>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end">
+          <div class="user-menu d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-bars" style="font-size: 14px; margin-right: 8px; color: var(--airbnb-gray);"></i>
+            <div class="user-avatar">
+              <% if (currentUser) { %>
+                <%= currentUser.username.charAt(0).toUpperCase() %>
+              <% } else { %>
+                <i class="fa-solid fa-user" style="font-size: 14px;"></i>
+              <% } %>
+            </div>
+          </div>
+          <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0" style="border-radius: 12px; padding: 8px 0; min-width: 200px;">
             <% if (!currentUser) { %>
-              <li><a class="dropdown-item" href="/login">Login</a></li>
-              <li><a class="dropdown-item" href="/signup">Signup</a></li>
+              <li><a class="dropdown-item py-2 px-3" href="/signup" style="font-weight: 600;">Sign up</a></li>
+              <li><a class="dropdown-item py-2 px-3" href="/login">Log in</a></li>
+              <li><hr class="dropdown-divider my-2"></li>
+              <li><a class="dropdown-item py-2 px-3" href="/listings/new">Airbnb your home</a></li>
+              <li><a class="dropdown-item py-2 px-3" href="#">Help</a></li>
             <% } else { %>
-              <li><a class="dropdown-item" href="/profile">Profile</a></li>
-              <li><a class="dropdown-item" href="/logout">Logout</a></li>
+              <li><a class="dropdown-item py-2 px-3" href="#" style="font-weight: 600;">Messages</a></li>
+              <li><a class="dropdown-item py-2 px-3" href="#">Notifications</a></li>
+              <li><a class="dropdown-item py-2 px-3" href="#">Trips</a></li>
+              <li><a class="dropdown-item py-2 px-3" href="#">Wishlists</a></li>
+              <li><hr class="dropdown-divider my-2"></li>
+              <li><a class="dropdown-item py-2 px-3" href="/listings/new">Airbnb your home</a></li>
+              <li><a class="dropdown-item py-2 px-3" href="#">Account</a></li>
+              <li><hr class="dropdown-divider my-2"></li>
+              <li><a class="dropdown-item py-2 px-3" href="#">Help</a></li>
+              <li><a class="dropdown-item py-2 px-3" href="/logout">Log out</a></li>
             <% } %>
           </ul>
         </div>

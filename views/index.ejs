@@ -3,31 +3,39 @@
     <%- include("./includes/filter.ejs") %>
     
     <div class="switch-top-right">
-        <div class="form-check-reverse form-switch">
+        <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
-            <label class="form-check-label" for="switchCheckDefault">Display prices with Tax</label>
+            <label class="form-check-label" for="switchCheckDefault">Display total before taxes</label>
         </div>
     </div>
-   <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1">
+   
+   <div class="listings-grid">
         <%for(let list of allListings){%>
-            <a class = "linked" href = "/listings/<%= list.id %>">
-                <div class="card listing-card">
-                    <img src="<%=list.image.url%>" class="card-img-top" alt="<%=list.title%>" style = "height: 20rem;">
-                    <div class="card-body">
-                        <p class="card-text before-taxswitch">
-                            <b><%= list.title %><br/></b>
-                            &#8377;<%= list.price.toLocaleString("en-IN") %>/night
-                        </p>
-                        <p class="card-text after-taxswitch" style = "display: none;">
-                            <b><%= list.title %><br/></b>
-                            &#8377;<%= ((list.price * 118)/100).toLocaleString("en-IN") %>/night
-                        </p>
+            <a class="linked" href="/listings/<%= list.id %>">
+                <div class="listing-card">
+                    <div style="position: relative; overflow: hidden; border-radius: 12px;">
+                        <img src="<%=list.image.url%>" class="card-img-top" alt="<%=list.title%>">
+                        <div class="card-img-overlay">
+                            <div class="overlay-content">
+                                <h5 class="overlayTitle">About this place</h5>
+                                <p class="overlayText"><%= list.description %></p>
+                            </div>  
+                        </div>
                     </div>
-                    <div class="card-img-overlay">
-                        <div class="overlay-content">
-                            <h5 class="card-title overlayTitle">About</h5>
-                            <p class="card-text overlayText"><%= list.description %></p>
-                        </div>  
+                    <div class="card-body">
+                        <h6 class="listing-title"><%= list.title %></h6>
+                        <p class="card-text" style="color: var(--airbnb-gray); font-size: 14px; margin-bottom: 4px;">
+                            <%= list.location %>, <%= list.country %>
+                        </p>
+                        <div class="d-flex align-items-center">
+                            <span class="listing-price before-taxswitch">
+                                ₹<%= list.price.toLocaleString("en-IN") %>
+                            </span>
+                            <span class="listing-price after-taxswitch" style="display: none;">
+                                ₹<%= ((list.price * 118)/100).toLocaleString("en-IN") %>
+                            </span>
+                            <span class="price-per-night ms-1">night</span>
+                        </div>
                     </div>
                 </div>
             </a>
@@ -40,10 +48,18 @@
     switchCheckDefault.addEventListener('change', function() {
         if (this.checked) {
             document.querySelectorAll('.before-taxswitch').forEach(el => el.style.display = 'none');
-            document.querySelectorAll('.after-taxswitch').forEach(el => el.style.display = 'inline-block');
-          } else {
-            document.querySelectorAll('.before-taxswitch').forEach(el => el.style.display = 'inline-block');
+            document.querySelectorAll('.after-taxswitch').forEach(el => el.style.display = 'inline');
+        } else {
+            document.querySelectorAll('.before-taxswitch').forEach(el => el.style.display = 'inline');
             document.querySelectorAll('.after-taxswitch').forEach(el => el.style.display = 'none');
         }
+    });
+
+    // Filter functionality
+    document.querySelectorAll('.filter').forEach(filter => {
+        filter.addEventListener('click', function() {
+            document.querySelectorAll('.filter').forEach(f => f.classList.remove('active'));
+            this.classList.add('active');
+        });
     });
 </script>

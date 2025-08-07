@@ -1,53 +1,187 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-<div class="row justify-content-center align-items-center min-vh-100">
-    <div class="col-md-6 col-lg-5">
-        <div class="card shadow-lg border-0 rounded-4">
-            <div class="card-header text-white text-center rounded-top-4" style="background-color: #c0392b;">
-                <h3 class="mb-0 fw-semibold">Create Your Account</h3>
+<style>
+.auth-container {
+    min-height: calc(100vh - 160px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    padding: 40px 20px;
+}
+
+.auth-card {
+    background: white;
+    border: 1px solid #DDDDDD;
+    border-radius: 12px;
+    box-shadow: var(--shadow-medium);
+    width: 100%;
+    max-width: 400px;
+    padding: 32px;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 32px;
+    border-bottom: 1px solid #EBEBEB;
+    padding-bottom: 24px;
+}
+
+.auth-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--airbnb-dark);
+    margin-bottom: 8px;
+}
+
+.auth-subtitle {
+    font-size: 16px;
+    color: var(--airbnb-gray);
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--airbnb-dark);
+    margin-bottom: 8px;
+    display: block;
+}
+
+.form-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #DDDDDD;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background: white;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--airbnb-dark);
+    box-shadow: 0 0 0 2px rgba(34, 34, 34, 0.1);
+}
+
+.form-input::placeholder {
+    color: var(--airbnb-gray);
+}
+
+.btn-auth {
+    width: 100%;
+    padding: 16px;
+    background: var(--airbnb-red);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-bottom: 16px;
+}
+
+.btn-auth:hover {
+    background: var(--airbnb-red-dark);
+}
+
+.auth-footer {
+    text-align: center;
+    padding-top: 24px;
+    border-top: 1px solid #EBEBEB;
+    margin-top: 24px;
+}
+
+.auth-footer a {
+    color: var(--airbnb-red);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+.terms-text {
+    font-size: 12px;
+    color: var(--airbnb-gray);
+    line-height: 1.4;
+    margin-top: 16px;
+}
+
+.terms-text a {
+    color: var(--airbnb-gray);
+    text-decoration: underline;
+}
+</style>
+
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h1 class="auth-title">Welcome to Wanderlust</h1>
+            <p class="auth-subtitle">Create your account to get started</p>
+        </div>
+        
+        <form action="/signup" method="POST" novalidate class="needs-validation">
+            <div class="form-group">
+                <label for="username" class="form-label">Username</label>
+                <input 
+                    type="text" 
+                    class="form-input" 
+                    id="username" 
+                    name="username" 
+                    placeholder="Choose a username"
+                    required
+                >
             </div>
-            <div class="card-body px-4 py-5">
-                <form action="/signup" method="POST" novalidate class="needs-validation">
-                    <!-- Username -->
-                    <div class="mb-4">
-                        <label for="username" class="form-label">Username</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-light">
-                                <i class="bi bi-person"></i>
-                            </span>
-                            <input 
-                                type="text" 
-                                class="form-control rounded-end" 
-                                id="username" 
-                                name="username" 
-                                placeholder="Enter username"
-                                required
-                            >
-                        </div>
-                    </div>
 
-                    <!-- Email -->
-                    <div class="mb-4">
-                        <label for="email" class="form-label">Email</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-light">
-                                <i class="bi bi-envelope"></i>
-                            </span>
-                            <input 
-                                type="email" 
-                                class="form-control rounded-end" 
-                                id="email" 
-                                name="email" 
-                                placeholder="Enter email address"
-                                required
-                            >
-                        </div>
-                    </div>
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input 
+                    type="email" 
+                    class="form-input" 
+                    id="email" 
+                    name="email" 
+                    placeholder="Enter your email address"
+                    required
+                >
+            </div>
 
-                    <!-- Password -->
-                    <div class="mb-4">
-                        <label for="password" class="form-label">Password</label>
-                        <div class="input-group">
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input 
+                    type="password" 
+                    class="form-input" 
+                    id="password" 
+                    name="password" 
+                    placeholder="Create a password"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="btn-auth">
+                Sign up
+            </button>
+            
+            <div class="terms-text">
+                By selecting Sign up, I agree to Wanderlust's 
+                <a href="/terms">Terms of Service</a> and acknowledge the 
+                <a href="/privacy">Privacy Policy</a>.
+            </div>
+        </form>
+        
+        <div class="auth-footer">
+            <p style="color: var(--airbnb-gray); margin: 0;">
+                Already have an account? 
+                <a href="/login">Log in</a>
+            </p>
+        </div>
+    </div>
+</div>
                             <span class="input-group-text bg-light">
                                 <i class="bi bi-lock"></i>
                             </span>
