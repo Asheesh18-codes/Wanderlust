@@ -5,7 +5,6 @@
 
 [![Stars](https://img.shields.io/github/stars/Asheesh18-codes/Wanderlust?style=flat-square)](https://github.com/Asheesh18-codes/Wanderlust/stargazers)
 [![Issues](https://img.shields.io/github/issues/Asheesh18-codes/Wanderlust?style=flat-square)](https://github.com/Asheesh18-codes/Wanderlust/issues)
-[![License](https://img.shields.io/badge/license-MIT-informational?style=flat-square)](#license)
 [![Node](https://img.shields.io/badge/Node.js-18+-green?style=flat-square)](https://nodejs.org)
 
 </div>
