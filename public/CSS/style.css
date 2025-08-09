@@ -8,6 +8,9 @@
     --shadow-light: 0 2px 4px rgba(0,0,0,0.08);
     --shadow-medium: 0 4px 16px rgba(0,0,0,0.12);
     --shadow-heavy: 0 8px 32px rgba(0,0,0,0.16);
+    --bg: #FFFFFF;
+    --surface: #FFFFFF;
+    --border: #EBEBEB;
 }
 
 * {
@@ -19,7 +22,7 @@ body{
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background-color: #FFFFFF;
+    background-color: var(--bg);
     color: var(--airbnb-dark);
     line-height: 1.4;
     font-size: 14px;
@@ -35,8 +38,8 @@ body{
 /*Navbar - Airbnb Style*/
 .navbar{
     height: 80px;
-    background-color: white;
-    border-bottom: 1px solid #EBEBEB;
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--border);
     box-shadow: var(--shadow-light);
     position: sticky;
     top: 0;
@@ -72,7 +75,7 @@ body{
 .search-container {
     display: flex;
     align-items: center;
-    background: white;
+    background: var(--surface);
     border: 1px solid #DDDDDD;
     border-radius: 40px;
     box-shadow: var(--shadow-light);
@@ -123,7 +126,7 @@ body{
     border: 1px solid #DDDDDD;
     border-radius: 21px;
     padding: 5px 5px 5px 12px;
-    background: white;
+    background: var(--surface);
     transition: box-shadow 0.2s ease;
     cursor: pointer;
 }
@@ -154,7 +157,7 @@ body{
 
 .listing-card{
     border: none !important;
-    background: white;
+    background: var(--surface);
     border-radius: var(--border-radius);
     overflow: hidden;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -178,6 +181,51 @@ body{
     object-fit: cover;
     transition: transform 0.3s ease;
 }
+
+/* Image wrapper & skeleton */
+.image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    background: #f2f2f2;
+}
+
+.img-skeleton {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #eee 25%, #f5f5f5 37%, #eee 63%);
+    background-size: 400% 100%;
+    animation: shimmer 1.4s ease infinite;
+    border-radius: var(--border-radius);
+    pointer-events: none;
+}
+
+@keyframes shimmer {
+    0% { background-position: 100% 0; }
+    100% { background-position: 0 0; }
+}
+
+/* Wishlist */
+.wishlist-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-light);
+    color: #222;
+    z-index: 2;
+}
+
+.wishlist-btn .fa-heart { font-size: 18px; }
+.wishlist-btn.active { background: rgba(255,56,92,0.95); color: #fff; }
+.wishlist-btn.active .fa-heart { font-weight: 900; }
 
 .listing-card:hover .card-img-top {
     transform: scale(1.05);
@@ -212,6 +260,28 @@ body{
     font-weight: 400;
     color: var(--airbnb-gray);
 }
+
+/* Buttons */
+.btn-airbnb {
+    background: var(--airbnb-red) !important;
+    border: none !important;
+    color: #fff !important;
+    padding: 10px 16px !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    box-shadow: var(--shadow-light) !important;
+}
+.btn-airbnb:hover { background: var(--airbnb-red-dark) !important; color: #fff !important; }
+
+.btn-outline-airbnb {
+    background: transparent !important;
+    border: 1px solid var(--airbnb-dark) !important;
+    color: var(--airbnb-dark) !important;
+    padding: 10px 16px !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+}
+.btn-outline-airbnb:hover { background: var(--airbnb-dark) !important; color: #fff !important; }
 
 /* Card overlay effect - Enhanced */
 .card-img-overlay {
@@ -407,7 +477,7 @@ body{
     bottom: 0;
     left: 0;
     width: 100%;
-    border-top: 1px solid #EBEBEB;
+    border-top: 1px solid var(--border);
 }
 
 .f-info-links a{
@@ -416,6 +486,39 @@ body{
     font-weight: 400;
     transition: color 0.2s ease;
 }
+
+/* Hero section */
+.hero {
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px 28px;
+    margin: 16px 0 8px;
+    background: radial-gradient(1200px 300px at 10% -20%, rgba(255,56,92,0.15), transparent 50%),
+                radial-gradient(800px 200px at 90% -10%, rgba(34,34,34,0.12), transparent 50%),
+                var(--surface);
+    overflow: hidden;
+}
+
+.hero-content { position: relative; z-index: 1; }
+.hero-title { font-size: 32px; font-weight: 700; margin: 0 0 8px; }
+.hero-subtitle { color: var(--airbnb-gray); margin-bottom: 16px; }
+.hero-art { position: absolute; right: -60px; top: -40px; width: 360px; height: 200px; background: conic-gradient(from 210deg, rgba(255,56,92,0.25), rgba(255,56,92,0.05), rgba(34,34,34,0.05)); filter: blur(20px); opacity: 0.8; }
+
+/* Dark theme */
+.theme-dark {
+    --bg: #0b0b0b;
+    --surface: #141414;
+    --border: #2a2a2a;
+    --airbnb-gray: #adadad;
+    --airbnb-dark: #f5f5f5;
+}
+
+.theme-dark .card-img-overlay { background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.45) 50%, transparent 100%); }
+.theme-dark .wishlist-btn { background: rgba(20,20,20,0.9); color: #eee; border: 1px solid #2a2a2a; }
+.theme-dark .navbar { box-shadow: none; }
+.theme-dark .search-container { border-color: #2a2a2a; }
+.theme-dark .f-info { background: #0f0f0f; }
 
 .f-info-links a:hover{
     color: var(--airbnb-dark);

@@ -34,6 +34,7 @@ const popup = new mapboxgl.Popup({ offset: 25 })
       </div>
     `);
 
+    console.log("Map initialized with listing:", listing.geometry.coordinates);
 // Use the custom Airbnb-style icon for the marker
 const marker = new mapboxgl.Marker({
     element: airbnbIcon

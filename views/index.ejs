@@ -1,5 +1,18 @@
 <%layout ("/layouts/boilerplate.ejs")%>
 <body>
+    <!-- Hero banner -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Find your next stay</h1>
+            <p class="hero-subtitle">Discover unique homes and experiences around the world.</p>
+            <div class="d-flex gap-2">
+                <a href="/listings" class="btn btn-airbnb">Explore stays</a>
+                <a href="/listings/new" class="btn btn-outline-airbnb">Host your space</a>
+            </div>
+        </div>
+        <div class="hero-art" aria-hidden="true"></div>
+    </section>
+
     <%- include("./includes/filter.ejs") %>
     
     <div class="switch-top-right">
@@ -13,8 +26,12 @@
         <%for(let list of allListings){%>
             <a class="linked" href="/listings/<%= list.id %>">
                 <div class="listing-card">
-                    <div style="position: relative; overflow: hidden; border-radius: 12px;">
-                        <img src="<%=list.image.url%>" class="card-img-top" alt="<%=list.title%>">
+                    <div class="image-wrapper">
+                        <img src="<%=list.image.url%>" class="card-img-top" alt="<%=list.title%>" loading="lazy">
+                        <div class="img-skeleton"></div>
+                        <button type="button" class="wishlist-btn" aria-pressed="false" title="Save to wishlist">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
                         <div class="card-img-overlay">
                             <div class="overlay-content">
                                 <h5 class="overlayTitle">About this place</h5>
