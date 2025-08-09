@@ -373,9 +373,12 @@ We welcome contributions! Here's how you can help:
 - Test authentication flows thoroughly
 - Validate all forms on both client and server side
 
+<<<<<<< HEAD
 ## 📝 License
 This project is licensed under the **MIT License** – feel free to use, modify, and distribute with attribution. (Add a `LICENSE` file for clarity.)
 
+=======
+>>>>>>> 500194776d00fd54f9cda07e03dee51a3169cb82
 ## 🙏 Acknowledgments
 
 - **Airbnb** for design inspiration
@@ -400,4 +403,10 @@ If you encounter any issues or have questions:
 
 *Start your journey with Wanderlust today!* 🌍✈️
 
+<<<<<<< HEAD
+=======
+[![GitHub stars](https://img.shields.io/github/stars/Asheesh18-codes/Wanderlust?style=social)](https://github.com/Asheesh18-codes/Wanderlust/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/Asheesh18-codes/Wanderlust?style=social)](https://github.com/Asheesh18-codes/Wanderlust/network)
+
+>>>>>>> 500194776d00fd54f9cda07e03dee51a3169cb82
 </div>
