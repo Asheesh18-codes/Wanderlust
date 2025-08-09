@@ -373,9 +373,6 @@ We welcome contributions! Here's how you can help:
 - Test authentication flows thoroughly
 - Validate all forms on both client and server side
 
-## 📝 License
-This project is licensed under the **MIT License** – feel free to use, modify, and distribute with attribution. (Add a `LICENSE` file for clarity.)
-
 ## 🙏 Acknowledgments
 
 - **Airbnb** for design inspiration
