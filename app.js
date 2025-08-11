@@ -8,6 +8,7 @@ const ejsMate = require("ejs-mate");
 const listingsRoute = require("./Routes/listing.js");
 const reviewRoute = require("./Routes/reviews.js");
 const Session = require("express-session");
+const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -15,9 +16,22 @@ const user = require("./models/user.js");
 const userRoute = require("./Routes/user.js");
 const {isLoggedIn} = require("./middleware.js");
 
+const dbUrl = process.env.ATLASDB_URL;
+
+// MongoDB session store
+const store = MongoStore.create({ 
+    mongoUrl: dbUrl,
+    crypto: {
+        secret: process.env.SECRET
+    },
+    touchAfter: 7 * 24 * 60 * 60
+});
+
+// MongoDB session store options
 const sessionOptions = {
+    store,
     name: 'session', // avoids default cookie name 'connect.sid'
-    secret: process.env.SESSION_SECRET || "MysecretCode",
+    secret: process.env.SECRET,
     resave: false, // prevents resaving session if unmodified
     saveUninitialized: false, // prevents saving uninitialized sessions
     cookie: {
@@ -27,7 +41,6 @@ const sessionOptions = {
         maxAge: 7 * 24 * 60 * 60 * 1000,
     }
 };
-
 
 app.use(express.urlencoded({extended:true})); // for data parsing
 app.set("view engine","ejs");
@@ -50,7 +63,7 @@ main()
     .catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
+  await mongoose.connect(dbUrl);
 }
 
 //indexRoute
