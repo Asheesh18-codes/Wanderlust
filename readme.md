@@ -6,28 +6,36 @@
 [![Stars](https://img.shields.io/github/stars/Asheesh18-codes/Wanderlust?style=flat-square)](https://github.com/Asheesh18-codes/Wanderlust/stargazers)
 [![Issues](https://img.shields.io/github/issues/Asheesh18-codes/Wanderlust?style=flat-square)](https://github.com/Asheesh18-codes/Wanderlust/issues)
 [![Node](https://img.shields.io/badge/Node.js-18+-green?style=flat-square)](https://nodejs.org)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-FF385C?style=flat-square)](https://wanderlust-1-f7ft.onrender.com/listings)
 
 </div>
 
 Wanderlust is a modern full‑stack web application for discovering and publishing travel accommodation listings. It delivers an Airbnb‑inspired UX with secure auth, image hosting, geocoded locations, ratings & reviews, and a clean responsive design.
 
+## 🌐 Live Demo
+
+**Experience Wanderlust live:** [https://wanderlust-1-f7ft.onrender.com/listings](https://wanderlust-1-f7ft.onrender.com/listings)
+
+> 🚀 The application is deployed on Render and ready to use. Create an account to start exploring and listing properties!
+
 ---
 
 ## 📑 Table of Contents
-1. [Features](#-features)
-2. [Design Highlights](#-design-highlights)
-3. [Project Structure](#-project-structure)
-4. [Tech Stack](#️-technologies-used)
-5. [Getting Started](#-getting-started)
-6. [Environment Variables](#-environment-variables)
-7. [Data Models](#-data-models)
-8. [Primary Routes](#-primary-routes)
-9. [Security & Validation](#-security--validation)
-10. [Troubleshooting](#-troubleshooting)
-11. [Roadmap](#-roadmap)
-12. [Contributing](#-contributing)
-13. [Acknowledgments](#-acknowledgments)
-14. [License](#license)
+1. [Live Demo](#-live-demo)
+2. [Features](#-features)
+3. [Design Highlights](#-design-highlights)
+4. [Project Structure](#-project-structure)
+5. [Tech Stack](#️-technologies-used)
+6. [Getting Started](#-getting-started)
+7. [Environment Variables](#-environment-variables)
+8. [Data Models](#-data-models)
+9. [Primary Routes](#-primary-routes)
+10. [Security & Validation](#-security--validation)
+11. [Troubleshooting](#-troubleshooting)
+12. [Roadmap](#-roadmap)
+13. [Contributing](#-contributing)
+14. [Acknowledgments](#-acknowledgments)
+15. [License](#license)
 
 ## ✨ Features
 
@@ -127,7 +135,8 @@ Wanderlust/
 
 ## 🚀 Getting Started
 
-> The app listens on: `http://localhost:8080`
+> **Live Demo**: [https://wanderlust-1-f7ft.onrender.com/listings](https://wanderlust-1-f7ft.onrender.com/listings)  
+> **Local Development**: The app runs on `http://localhost:8080`
 
 ### ⏱ Quick Start (Copy & Run)
 
@@ -225,6 +234,7 @@ Commit `.env.example` – NEVER commit your real `.env`.
 ### **Cloud Services**
 - **Cloudinary** - Image storage and optimization
 - **Mapbox** - Interactive maps and geocoding
+- **Render** - Cloud application hosting
 
 ### **Development Tools**
 - **Method-override** - HTTP verb support
@@ -342,14 +352,19 @@ Currently no automated tests. Suggested stack:
 - [ ] Pagination & infinite scroll for listings
 - [ ] Image gallery & multi‑image uploads
 - [ ] Email verification & password reset flow
-- [ ] Deployment guide (Render / Railway / Vercel + Atlas)
+- [ ] Enhanced deployment monitoring and logging
 - [ ] API layer (JSON endpoints) for future SPA/mobile client
 
-## 🗂 Deployment Notes (Future)
-1. Externalize `PORT` and update `app.js` to use `process.env.PORT || 8080`.
-2. Set `secure: true` on session cookie behind HTTPS / reverse proxy.
-3. Use production Mapbox & Cloudinary credentials.
-4. Add cache headers for static assets (e.g., via CDN or `helmet`).
+## 🚀 Deployment
+
+The application is currently deployed on **Render** at: [https://wanderlust-1-f7ft.onrender.com/listings](https://wanderlust-1-f7ft.onrender.com/listings)
+
+### Deployment Features:
+- ✅ **Production-ready** with secure HTTPS
+- ✅ **MongoDB Atlas** integration
+- ✅ **Cloudinary** for image management  
+- ✅ **Environment variables** configured
+- ✅ **Automatic deployments** from main branch
 
 ## 🔧 Dev Tips
 - Run `node --watch app.js` (Node 18+) for a lightweight dev reload if you don't add Nodemon.
@@ -378,6 +393,7 @@ We welcome contributions! Here's how you can help:
 - **Bootstrap** team for the excellent CSS framework
 - **Mapbox** for providing amazing mapping services
 - **Cloudinary** for reliable image management
+- **Render** for seamless deployment platform
 - The **open-source community** for the incredible tools and libraries
 
 ## 📞 Support
@@ -387,6 +403,7 @@ If you encounter any issues or have questions:
 1. Check the [Issues](https://github.com/Asheesh18-codes/Wanderlust/issues) page
 2. Create a new issue with detailed description
 3. Include screenshots for UI-related problems
+4. Try the live demo first: [https://wanderlust-1-f7ft.onrender.com/listings](https://wanderlust-1-f7ft.onrender.com/listings)
 
 ---
 
@@ -395,5 +412,7 @@ If you encounter any issues or have questions:
 **Made with ❤️ for travelers around the world**
 
 *Start your journey with Wanderlust today!* 🌍✈️
+
+**🌐 [Try Live Demo](https://wanderlust-1-f7ft.onrender.com/listings)**
 
 </div>
