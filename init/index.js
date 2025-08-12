@@ -1,80 +1,63 @@
-require('dotenv').config();
-const mongoose = require("mongoose");
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
+const mongoose = require('mongoose');
+const Listing = require('../models/listing');
+const rawData = require('./data');
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
-const initData = require("./data.js");
-const Listing = require("../models/listing.js");
-const User = require("../models/user.js");
 
-const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/wanderlust";
-const MAP_TOKEN = process.env.MAP_TOKEN || 'your_mapbox_token_here';
-const geocodingClient = mbxGeocoding({ accessToken: MAP_TOKEN });
+const DB_URL = process.env.ATLASDB_URL || process.env.MONGO_URL || "mongodb://127.0.0.1:27017/wanderlust";
+const token = (process.env.MAPBOX_TOKEN || process.env.MAP_TOKEN || "").trim();
 
-async function main() {
-  await mongoose.connect(MONGO_URL);
+if(!token.startsWith('pk.')){
+  console.error("Valid Mapbox public token (pk.*) required. Set MAPBOX_TOKEN or MAP_TOKEN.");
+  process.exit(1);
 }
 
-async function ensureSeedUser() {
-    // Ensure a valid owner exists (Listing.owner is required)
-    let owner = await User.findOne({ username: "Ashish Singh" });
-    if (!owner) {
-      owner = new User({ email: "mofane8980@dosonex.com", username: "Ashish Singh" });
-      // passport-local-mongoose helper to set a hashed password
-      await User.register(owner, "Ashish Singh");
-    }
-  return owner;
+const geocoder = mbxGeocoding({ accessToken: token });
+
+const seeds = Array.isArray(rawData) ? rawData :
+              Array.isArray(rawData.data) ? rawData.data :
+              Array.isArray(rawData.listings) ? rawData.listings : [];
+
+if(!seeds.length){
+  console.error("No seed data found.");
+  process.exit(1);
 }
 
-const geocodeLocation = async (location, country) => {
+(async ()=>{
   try {
-    const queryString = country ? `${location}, ${country}` : location;
-    const response = await geocodingClient.forwardGeocode({
-      query: queryString,
-      limit: 1
-    }).send();
-    const feature = response.body.features[0];
-    if (feature && feature.geometry && Array.isArray(feature.geometry.coordinates)) {
-      return feature.geometry.coordinates;
+    await mongoose.connect(DB_URL);
+    console.log("Connected:", DB_URL);
+    await Listing.deleteMany({});
+    console.log("Cleared old listings.");
+
+    const docs = [];
+    for (const seed of seeds) {
+      let geometry = { type: "Point", coordinates: [0,0] };
+      try {
+        const resp = await geocoder.forwardGeocode({
+          query: `${seed.location}, ${seed.country}`,
+          limit: 1
+        }).send();
+        if(resp.body.features?.length){
+          geometry = resp.body.features[0].geometry;
+        } else {
+          console.warn("No geocode result:", seed.title);
+        }
+      } catch(err){
+        console.warn("Geocode error:", seed.title, err.message);
+      }
+      docs.push({ ...seed, geometry });
+      // small delay to respect rate limits
+      await new Promise(r=>setTimeout(r, 150));
     }
-  } catch (err) {
-    console.warn(`Geocoding failed for "${location}" -> using fallback [0,0]. Reason: ${err.message}`);
+
+    await Listing.insertMany(docs);
+    console.log("Seeded", docs.length, "listings.");
+  } catch(e){
+    console.error(e);
+  } finally {
+    await mongoose.connection.close();
+    console.log("Done.");
   }
-  return [0, 0];
-};
-
-const initDB = async () => {
-  const owner = await ensureSeedUser();
-
-  // Clear existing listings
-  await Listing.deleteMany({});
-  console.log('Cleared existing listings');
-
-  const listingsToInsert = [];
-  for (const obj of initData.data) {
-    const coordinates = await geocodeLocation(obj.location, obj.country);
-    listingsToInsert.push({
-      ...obj,
-      owner: owner._id,
-      geometry: { type: 'Point', coordinates }
-    });
-  }
-
-  await Listing.insertMany(listingsToInsert);
-  console.log(`Inserted ${listingsToInsert.length} listings`);
-};
-
-// Connect, seed, then disconnect cleanly
-main()
-  .then(async () => {
-    console.log("Connected to DB");
-    if (!process.env.MAP_TOKEN) {
-      console.warn("MAP_TOKEN not set. Geocoding may fail or use placeholder token.");
-    }
-    await initDB();
-  })
-  .catch((err) => {
-    console.error('Seeding failed:', err);
-  })
-  .finally(async () => {
-    await mongoose.disconnect();
-    console.log("Disconnected from DB");
-  });
+})();
